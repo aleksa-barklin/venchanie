@@ -325,7 +325,7 @@ padding:90px 6%;
 <h1 class="hero-subtitle">
 Дорогие гости,<br>
 приглашаем вас<br>
-на наше венчание
+на венчание
 </h1>
 
 <div class="hero-date">
@@ -428,15 +428,7 @@ padding:90px 6%;
 
 </div>
 
-<form action="https://formsubmit.co/mim.2006@yandex.ru" method="POST">
-
-<input type="hidden" name="_cc" value="ivan.samoylov1305@gmail.com">
-
-<input type="hidden" name="_captcha" value="false">
-
-<input type="hidden" name="_subject" value="Ответ на приглашение">
-
-<input type="hidden" name="_template" value="table">
+<form id="telegram-form">
 
 <div class="form-row">
 
@@ -444,7 +436,7 @@ padding:90px 6%;
 
 <label>Ваше имя</label>
 
-<input type="text" name="Имя" required>
+<input type="text" id="name" required>
 
 </div>
 
@@ -452,7 +444,7 @@ padding:90px 6%;
 
 <label>Сможете присутствовать?</label>
 
-<select name="Присутствие" required>
+<select id="attendance" required>
 
 <option value="">Выберите вариант</option>
 
@@ -470,7 +462,7 @@ padding:90px 6%;
 
 <label>Комментарий</label>
 
-<textarea name="Комментарий"></textarea>
+<textarea id="message"></textarea>
 
 </div>
 
@@ -490,10 +482,61 @@ padding:90px 6%;
 
 <h2>
 С любовью,<br>
-Иван и Марья
+Иван и Мария
 </h2>
 
 </footer>
+
+<script>
+
+const TOKEN = '8648210016:AAEbS4E59nT-nqVoyIXe-5AcZNvpyymnwR0';
+const CHAT_ID = '271267298';
+
+document.getElementById('telegram-form').addEventListener('submit', async function(e){
+
+e.preventDefault();
+
+const name = document.getElementById('name').value;
+const attendance = document.getElementById('attendance').value;
+const message = document.getElementById('message').value;
+
+const text = `
+💍 Новое подтверждение на венчание
+
+👤 Имя: ${name}
+
+✅ Ответ: ${attendance}
+
+💌 Комментарий:
+${message}
+`;
+
+try{
+
+await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`,{
+method:'POST',
+headers:{
+'Content-Type':'application/json'
+},
+body:JSON.stringify({
+chat_id:CHAT_ID,
+text:text
+})
+});
+
+alert('Спасибо! Ваш ответ отправлен 💕');
+
+document.getElementById('telegram-form').reset();
+
+}catch(error){
+
+alert('Ошибка отправки формы');
+
+}
+
+});
+
+</script>
 
 </body>
 
