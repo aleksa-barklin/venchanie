@@ -134,7 +134,7 @@ line-height:1.5;
 }
 
 .dresscode{
-background:#ffffff;
+background:#ece7e0;
 }
 
 .colors{
@@ -428,7 +428,9 @@ padding:90px 6%;
 
 </div>
 
-<form id="telegram-form">
+<form action="https://api.web3forms.com/submit" method="POST">
+
+<input type="hidden" name="access_key" value="2084c4d0-9efe-492e-805a-6583f6a55e2c">
 
 <div class="form-row">
 
@@ -436,7 +438,17 @@ padding:90px 6%;
 
 <label>Ваше имя</label>
 
-<input type="text" id="name" required>
+<input type="text" name="name" required>
+
+</div>
+
+<div class="input-group">
+
+<label>Ваш Email</label>
+
+<input type="email" name="email" required>
+
+</div>
 
 </div>
 
@@ -444,7 +456,7 @@ padding:90px 6%;
 
 <label>Сможете присутствовать?</label>
 
-<select id="attendance" required>
+<select name="attendance" required>
 
 <option value="">Выберите вариант</option>
 
@@ -456,13 +468,11 @@ padding:90px 6%;
 
 </div>
 
-</div>
-
 <div class="input-group">
 
 <label>Комментарий</label>
 
-<textarea id="message"></textarea>
+<textarea name="message"></textarea>
 
 </div>
 
@@ -486,57 +496,6 @@ padding:90px 6%;
 </h2>
 
 </footer>
-
-<script>
-
-const TOKEN = '8648210016:AAEbS4E59nT-nqVoyIXe-5AcZNvpyymnwR0';
-const CHAT_ID = '-5294720922';
-
-document.getElementById('telegram-form').addEventListener('submit', async function(e){
-
-e.preventDefault();
-
-const name = document.getElementById('name').value;
-const attendance = document.getElementById('attendance').value;
-const message = document.getElementById('message').value;
-
-const text = `
-💍 Новое подтверждение на венчание
-
-👤 Имя: ${name}
-
-✅ Ответ: ${attendance}
-
-💌 Комментарий:
-${message}
-`;
-
-try{
-
-await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`,{
-method:'POST',
-headers:{
-'Content-Type':'application/json'
-},
-body:JSON.stringify({
-chat_id:CHAT_ID,
-text:text
-})
-});
-
-alert('Спасибо! Ваш ответ отправлен 💕');
-
-document.getElementById('telegram-form').reset();
-
-}catch(error){
-
-alert('Ошибка отправки формы');
-
-}
-
-});
-
-</script>
 
 </body>
 
